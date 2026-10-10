@@ -1,0 +1,151 @@
+# Roles and skills cell: personal roles, skills and categories, role learning paths, allocations and links.
+# role_id is the text id of a role in docs/registries (ROLE-CATALOG); goal_id, project_id, context_id and
+# task_id point at other cells as plain ids (no cross-cell foreign key).
+cell: roles-skills
+title: Roles and skills
+port: 3622
+resources:
+  personal-role:
+    table: personal_roles
+    plural: personal-roles
+    graph: [name, slug, category, status]
+    filters: [category, status]
+    fields:
+      slug: {type: text, required: true, max_length: 200, unique: true}
+      name: {type: text, required: true, max_length: 500}
+      category: {type: text, required: true, max_length: 200}
+      description: {type: text}
+      source_path: {type: text}
+      source: {type: text, default: manual, max_length: 200}
+      status: {type: enum, values: [planned, active, paused, retired], default: active}
+  personal-role-context-link:
+    table: personal_role_context_links
+    plural: personal-role-context-links
+    filters: [personal_role_id, context_id, relation_type]
+    unique: [[personal_role_id, context_id]]
+    fields:
+      personal_role_id: {type: ref, to: personal-role, required: true}
+      context_id: {type: bigint, required: true}
+      relation_type: {type: enum, values: [belongs_to, supports], default: belongs_to}
+      source: {type: text, default: manual, max_length: 200}
+  personal-role-goal-link:
+    table: personal_role_goal_links
+    plural: personal-role-goal-links
+    filters: [personal_role_id, goal_id, link_type]
+    unique: [[personal_role_id, goal_id]]
+    fields:
+      personal_role_id: {type: ref, to: personal-role, required: true}
+      goal_id: {type: bigint, required: true}
+      link_type: {type: enum, values: [primary, supporting], default: primary}
+      source: {type: text, default: manual, max_length: 200}
+  personal-role-project-link:
+    table: personal_role_project_links
+    plural: personal-role-project-links
+    filters: [personal_role_id, project_id, link_type]
+    unique: [[personal_role_id, project_id]]
+    fields:
+      personal_role_id: {type: ref, to: personal-role, required: true}
+      project_id: {type: bigint, required: true}
+      link_type: {type: enum, values: [primary, supporting], default: primary}
+      source: {type: text, default: manual, max_length: 200}
+  personal-role-task-link:
+    table: personal_role_task_links
+    plural: personal-role-task-links
+    filters: [personal_role_id, task_id, link_type]
+    unique: [[personal_role_id, task_id]]
+    fields:
+      personal_role_id: {type: ref, to: personal-role, required: true}
+      task_id: {type: bigint, required: true}
+      link_type: {type: enum, values: [primary, supporting], default: primary}
+      source: {type: text, default: manual, max_length: 200}
+  role-goal-link:
+    table: role_goal_links
+    plural: role-goal-links
+    filters: [role_id, goal_id, link_type]
+    unique: [[role_id, goal_id]]
+    fields:
+      role_id: {type: text, required: true, max_length: 200}
+      goal_id: {type: bigint, required: true}
+      link_type: {type: enum, values: [primary, supporting], default: primary}
+      source: {type: text, default: manual, max_length: 200}
+      priority: {type: int, default: 3}
+      allocation_percent: {type: int, default: 0}
+  skill-category:
+    table: skill_categories
+    plural: skill-categories
+    filters: [parent_id]
+    order: sort_order
+    fields:
+      name: {type: text, required: true, max_length: 200, unique: true}
+      slug: {type: text, required: true, max_length: 200, unique: true}
+      description: {type: text}
+      icon: {type: text, max_length: 100}
+      color: {type: text, max_length: 40}
+      parent_id: {type: ref, to: skill-category}
+      sort_order: {type: int, default: 0}
+  skill:
+    table: skills
+    plural: skills
+    graph: [name, slug, status, level]
+    filters: [category_id, level, target_level, status, priority, revenue_relevant]
+    fields:
+      name: {type: text, required: true, max_length: 500}
+      slug: {type: text, required: true, max_length: 200, unique: true}
+      description: {type: text}
+      category_id: {type: ref, to: skill-category}
+      level: {type: enum, values: [L1_deep, L2_capable, L3_overview, L4_outsource]}
+      target_level: {type: enum, values: [L1_deep, L2_capable, L3_overview, L4_outsource]}
+      status: {type: enum, values: [not_started, learning, practicing, proficient, expert], default: not_started}
+      priority: {type: int, default: 3}
+      progress_percent: {type: int, default: 0, min: 0, max: 100}
+      hours_invested: {type: real, default: 0}
+      started_at: {type: date}
+      target_completion_date: {type: date}
+      key_concepts: {type: text}
+      resources: {type: text}
+      notes: {type: text}
+      revenue_relevant: {type: bool, default: false}
+      last_practiced: {type: date}
+  role-path-step:
+    table: role_path_steps
+    plural: role-path-steps
+    filters: [role_id, phase_id, skill_id, source_registry]
+    unique: [[role_id, step_key, source_registry]]
+    fields:
+      role_id: {type: text, required: true, max_length: 200}
+      step_key: {type: text, required: true, max_length: 200}
+      phase_id: {type: enum, required: true, values: [orient, learn, practice, evidence, operate]}
+      title: {type: text, required: true, max_length: 500}
+      action: {type: text, required: true}
+      completion_rule: {type: text, required: true}
+      skill_id: {type: ref, to: skill}
+      target_progress: {type: int, min: 0, max: 100}
+      evidence_path: {type: text}
+      source_registry: {type: text, default: docs/ROLE-PATHS.yaml, max_length: 300}
+  role-project-allocation:
+    table: role_project_allocations
+    plural: role-project-allocations
+    filters: [role_id, project_id, goal_id, status]
+    unique: [[role_id, project_id, goal_id]]
+    fields:
+      role_id: {type: text, required: true, max_length: 200}
+      project_id: {type: bigint, required: true}
+      goal_id: {type: bigint}
+      allocation_percent: {type: int, default: 0, min: 0, max: 100}
+      priority: {type: int, default: 3, min: 1, max: 5}
+      status: {type: enum, values: [planned, active, paused, completed], default: planned}
+      source: {type: text, default: manual, max_length: 200}
+      start_date: {type: date}
+      end_date: {type: date}
+      notes: {type: text}
+  role-skill-link:
+    table: role_skill_links
+    plural: role-skill-links
+    filters: [role_id, skill_id, link_type]
+    unique: [[role_id, skill_id]]
+    fields:
+      role_id: {type: text, required: true, max_length: 200}
+      skill_id: {type: ref, to: skill, required: true}
+      learning_path: {type: text, required: true}
+      link_type: {type: enum, values: [core, supporting], default: core}
+      source_registry: {type: text, default: docs/ROLE-LEARNING.yaml, max_length: 300}
