@@ -30,6 +30,7 @@ Every resource has list, stats, get, get-by-legacy-id, create, patch and delete
 | `/v1/role-path-steps` | role-path-step | `role_id`, `phase_id`, `skill_id`, `source_registry` |
 | `/v1/role-project-allocations` | role-project-allocation | `role_id`, `project_id`, `goal_id`, `status` |
 | `/v1/role-skill-links` | role-skill-link | `role_id`, `skill_id`, `link_type` |
+| `/v1/progress-log` | progress-entry | `skill_id`, `activity_type` |
 
 ## Develop and operate
 

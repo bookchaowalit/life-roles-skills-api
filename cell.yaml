@@ -149,3 +149,21 @@ resources:
       learning_path: {type: text, required: true}
       link_type: {type: enum, values: [core, supporting], default: core}
       source_registry: {type: text, default: docs/ROLE-LEARNING.yaml, max_length: 300}
+  progress-entry:
+    table: progress_log
+    plural: progress-log
+    graph: [title, activity_type, skill_id]
+    filters: [skill_id, activity_type]
+    fields:
+      skill_id: {type: ref, to: skill}
+      activity_type: {type: enum, values: [study, practice, project, teaching, review, other], default: other}
+      title: {type: text, required: true, max_length: 500}
+      description: {type: text}
+      hours_spent: {type: real, min: 0}
+      progress_before: {type: int, min: 0, max: 100}
+      progress_after: {type: int, min: 0, max: 100}
+      what_learned: {type: text}
+      challenges: {type: text}
+      next_steps: {type: text}
+      evidence_url: {type: text, max_length: 2000}
+      logged_at: {type: timestamp}
