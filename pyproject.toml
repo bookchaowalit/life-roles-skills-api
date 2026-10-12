@@ -1,7 +1,7 @@
 [project]
 name = "solo-roles-skills"
 version = "0.1.0"
-description = "Roles and skills cell: its own API and database (made with solo-cell-kit)"
+description = "Roles and skills cell: its own API and database"
 requires-python = ">=3.12"
 dependencies = [
     "psycopg[binary]>=3.2,<4",
