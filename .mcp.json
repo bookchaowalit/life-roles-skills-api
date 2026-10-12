@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "roles-skills": {
+      "command": ".venv/bin/roles-skills-mcp",
+      "args": []
+    }
+  }
+}
