@@ -1,6 +1,6 @@
 import { defineRailway, project, service } from "railway/iac";
 
-// roles-skills: the Roles and skills cell. Variables stay unmanaged (secrets live in Railway only).
+// life-roles-skills-api: the Roles and skills cell. Variables stay unmanaged (secrets live in Railway only).
 // roles-skills-api sleeps when idle (Railway Serverless) and wakes on the next request.
 // roles-skills-publisher is a cron sweep of the outbox that exits after each run.
 // Every service runs in Singapore next to Neon (aws-ap-southeast-1) and empire-platform; the IaC does not
@@ -16,7 +16,7 @@ export default defineRailway(() => {
     deploy: { cronSchedule: "*/15 * * * *", restartPolicyType: "NEVER" },
   });
 
-  return project("roles-skills", {
+  return project("life-roles-skills-api", {
     variables: { managed: false },
     resources: [api, publisher],
   });

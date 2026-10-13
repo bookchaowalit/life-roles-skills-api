@@ -1,5 +1,4 @@
-# roles-skills
-
+# life-roles-skills-api
 The Roles and skills cell: its own API (Railway, serverless) and its own Neon
 database, described by `cell.yaml` and served by the code in `src/cellkit/`, which
 this repository owns. It
@@ -8,9 +7,9 @@ HTTP with the caller's token.
 
 | | |
 |---|---|
-| API | Railway project `roles-skills`, service `roles-skills-api` (Serverless) |
+| API | Railway project `life-roles-skills-api`, service `roles-skills-api` (Serverless) |
 | Publisher | service `roles-skills-publisher` (Railway cron, `*/15 * * * *`) |
-| Data | Neon project `roles-skills`, database `roles_skills` |
+| Data | Neon project `life-roles-skills-api`, database `roles_skills` |
 | Registry | solo-empire `repository-catalog/registries/online-systems.yaml` (`roles-skills`) |
 
 ## API
