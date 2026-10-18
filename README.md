@@ -41,5 +41,6 @@ NEON_API_KEY=... .venv/bin/roles-skills-db provision
 npm install && railway config apply && railway up --ci --service roles-skills-api
 ```
 
-Railway variables: `ROLES_SKILLS_DB_MODE=hosted`, `ROLES_SKILLS_DB_URL_API`,
+Railway variables: `SENTRY_DSN` (error reporting; unset = off, see
+`src/cellkit/_sentry.py`), `ROLES_SKILLS_DB_MODE=hosted`, `ROLES_SKILLS_DB_URL_API`,
 `ROLES_SKILLS_JWT_PUBLIC_KEY_PEM`, `ROLES_SKILLS_JWT_ISSUER`, `EMPIRE_PLATFORM_URL`, and for the publisher `ROLES_SKILLS_DB_URL_PUBLISHER` and `ROLES_SKILLS_PUBLISHER_TOKEN`.
