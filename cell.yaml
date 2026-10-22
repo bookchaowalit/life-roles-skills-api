@@ -127,6 +127,7 @@ resources:
     plural: role-project-allocations
     filters: [role_id, project_id, goal_id, status]
     unique: [[role_id, project_id, goal_id]]
+    ranges: [[start_date, end_date]]
     fields:
       role_id: {type: text, required: true, max_length: 200}
       project_id: {type: bigint, required: true}
