@@ -8,7 +8,7 @@ HTTP with the caller's token.
 | | |
 |---|---|
 | API | Railway project `life-roles-skills-api`, service `roles-skills-api` (Serverless) |
-| Publisher | service `roles-skills-publisher` (Railway cron, `*/15 * * * *`) |
+| Publisher | service `roles-skills-publisher` (Railway cron, `5 * * * *`) |
 | Data | Neon project `life-roles-skills-api`, database `roles_skills` |
 | Registry | solo-empire `repository-catalog/registries/online-systems.yaml` (`roles-skills`) |
 

@@ -24,7 +24,7 @@ export default defineRailway(() => {
   const publisher = service("roles-skills-publisher", {
     source: github,
     startCommand: "roles-skills-publish",
-    deploy: { cronSchedule: "*/15 * * * *", restartPolicyType: "NEVER" },
+    deploy: { cronSchedule: "5 * * * *", restartPolicyType: "NEVER" },
   });
 
   return project("life-roles-skills-api", {
