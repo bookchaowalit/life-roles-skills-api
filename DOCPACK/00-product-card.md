@@ -24,7 +24,7 @@ owner: Product owner (Book Dev)
 
 - API 12 resource เช่น `/v1/personal-roles`, `/v1/skills`, `/v1/skill-categories`, `/v1/role-path-steps`, `/v1/role-project-allocations`, `/v1/progress-log` พร้อมตารางลิงก์ไป goal/project/task/context
 - `role_id` เป็น text id จาก `docs/registries` (ROLE-CATALOG) ตาม `cell.yaml`
-- Publisher `roles-skills-publisher` (cron `*/15 * * * *`)
+- Publisher `roles-skills-publisher` (cron `5 * * * *`)
 
 ## 4. หลักฐานสถานะ
 
