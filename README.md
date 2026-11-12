@@ -1,7 +1,7 @@
 # life-roles-skills-api
 The Roles and skills cell: its own API (Railway, serverless) and its own Neon
-database, described by `cell.yaml` and served by the code in `src/cellkit/`, which
-this repository owns. It
+database, described by `cell.yaml` and served by the pinned [platform-cellkit](https://github.com/bookchaowalit/platform-cellkit)
+package; this repository owns `cell.yaml` and its migrations. It
 reuses empire-platform for identity, authorization, executions and audit over
 HTTP with the caller's token.
 
@@ -15,7 +15,7 @@ HTTP with the caller's token.
 ## API
 
 Every resource has list, stats, get, get-by-legacy-id, create, patch and delete
-(see `cellkit/app.py`). Permissions are `roles-skills.<resource>:read|write|delete`.
+(see `cellkit/app.py` in [platform-cellkit](https://github.com/bookchaowalit/platform-cellkit)). Permissions are `roles-skills.<resource>:read|write|delete`.
 
 | Path | Resource | Filters |
 |---|---|---|
@@ -53,5 +53,5 @@ previous deployment. Roll back by redeploying an earlier deployment in Railway. 
 no longer used.
 
 Railway variables: `SENTRY_DSN` (error reporting; unset = off, see
-`src/cellkit/_sentry.py`), `ROLES_SKILLS_DB_MODE=hosted`, `ROLES_SKILLS_DB_URL_API`,
+`cellkit/_sentry.py` in platform-cellkit), `ROLES_SKILLS_DB_MODE=hosted`, `ROLES_SKILLS_DB_URL_API`,
 `ROLES_SKILLS_JWT_PUBLIC_KEY_PEM`, `ROLES_SKILLS_JWT_ISSUER`, `EMPIRE_PLATFORM_URL`, and for the publisher `ROLES_SKILLS_DB_URL_PUBLISHER` and `ROLES_SKILLS_PUBLISHER_TOKEN`.
